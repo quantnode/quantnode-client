@@ -1,0 +1,21 @@
+import quantnode
+
+class MyCalculator(quantnode.Calculator):
+
+    def calculate(self, instrument, pricebar):
+        """
+        Calculate statistics or solve mathematical models here.
+        Call self.store_data() to save calculations
+        """
+        pass
+
+
+class MyAlgorithm(quantnode.Algorithm):
+
+    def handle_market_event(self, pricebar, calculations, current_position, is_trading_signal):
+        """
+        Write trading logic here.
+        Call self.place_order() to create orders
+        """
+        pass
+

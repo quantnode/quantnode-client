@@ -1,0 +1,3 @@
+USERNAME = '{{ username }}'
+API_KEY = '{{ api_key }}'
+TEST_SERVER_ADDRESS = ''
