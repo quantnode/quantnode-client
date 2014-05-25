@@ -1,0 +1,9 @@
+Quantnode is a platform for building financial trading algorithms in Python.
+
+
+Tutorials to get started are available at: http://quantnode.com/tutorials/
+Learn more at quantnode.com
+
+
+
+Github repository: https://github.com/quantnode/quantnode-client

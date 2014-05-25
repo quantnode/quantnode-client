@@ -9,16 +9,29 @@ install_requires = [
     'python-dateutil >= 2.1'
 ]
 
+requires = [
+    'requests',
+    'Pyro4',
+    'slumber',
+    'python-dateutil'
+]
+
+long_description = ''
+with open('description.txt', 'rb') as f:
+    long_description = f.read()
+
 setup(
     name='quantnode',
     version=VERSION,
-    description='Quantnode client framework',
+    description='Quantnode framework for building financial trading algorithms',
+    long_description=long_description,
     author='Quantnode',
     author_email='hello@quantnode.com',
     url='https://www.quantnode.com/',
     packages=['quantnode'],
     package_data={'quantnode': ['../VERSION']},
     install_requires=install_requires,
+    requires = requires,
     scripts=['bin/quantnode-run.py'],
     classifiers=[
         "Development Status :: 4 - Beta",
