@@ -1,4 +1,7 @@
-from distutils.core import setup
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
 VERSION = '0.1.0'
 
@@ -7,13 +10,6 @@ install_requires = [
     'Pyro4 >= 4.25',
     'slumber >= 0.6.0',
     'python-dateutil >= 2.1'
-]
-
-requires = [
-    'requests',
-    'Pyro4',
-    'slumber',
-    'python-dateutil'
 ]
 
 long_description = ''
@@ -31,7 +27,6 @@ setup(
     packages=['quantnode'],
     package_data={'quantnode': ['../VERSION']},
     install_requires=install_requires,
-    requires = requires,
     scripts=['bin/quantnode-run.py'],
     classifiers=[
         "Development Status :: 4 - Beta",
