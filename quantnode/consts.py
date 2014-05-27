@@ -1,13 +1,13 @@
-# HARDCODED CONSTANTS
 # DO NOT CHANGE
 
 PORT = 22010
 BUFFER_SIZE = 2 ** 16
 
-# API_BASE_URL = 'http://localhost:8000/api'
-API_BASE_URL = 'http://www.quantnode.com/api'
+API_BASE_URL = 'http://api.quantnode.com'
+API_LOCATION = 'api'
+API_PORT = 22011
 API_VERSION = 'v1'
-API_URL = '%s/%s/' % (API_BASE_URL, API_VERSION)
+API_URL = '%s:%d/%s/%s' % (API_BASE_URL, API_PORT, API_LOCATION, API_VERSION)
 
 STOP_FLAG = 'STOP'
 CONTINUE_FLAG = 'CONTINUE'
