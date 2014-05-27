@@ -1,5 +1,7 @@
 import os
 import sys
+import inspect
+import json
 
 def attach_parameters(obj, params):
     """
@@ -116,4 +118,39 @@ def find_implementation(repopath, clsname, modulename='quantnode.actors'):
             break
 
     return useralgo_cls
+
+
+def get_error_info(err):
+    """
+    Logs exception to database, flags that an error has been recorded in the workflow state
+    """
+    _, _, tb = sys.exc_info()
+
+    # user_error = False
+    lineno = None
+    codelines = ''
+    filename = ''
+
+    while tb.tb_next is not None:
+        tb = tb.tb_next
+        lineno = tb.tb_lineno
+        codelines = inspect.getsource(tb.tb_frame).replace('\r\n', '\n')
+        func_firstlineno = tb.tb_frame.f_code.co_firstlineno
+        filename = inspect.getsourcefile(tb.tb_frame).split('/')[-1][:50]
+        func_lineno = lineno - func_firstlineno
+        func_name = tb.tb_frame.f_code.co_name[:100]
+
+    flocals = {}
+    for key, value in tb.tb_frame.f_locals.items():
+        flocals[key] = str(value)
+
+    return {
+        'codelines': codelines,
+        'filename': filename,
+        'func_name': func_name,
+        'func_lineno': func_lineno,
+        'f_locals': json.dumps(flocals),
+        'message': err.message,
+        'lineno': lineno
+    }
 

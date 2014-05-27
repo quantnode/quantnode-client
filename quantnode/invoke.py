@@ -34,12 +34,24 @@ class RemoteInvocationHandler(object):
     def invoke(self, repopath, data):
         data = urllib.unquote_plus(data)
         method, cls, params = self._parse_params(data)
-        if method == 'ping':
-            return 'PONG'
-        elif method == 'get_implementation_info':
-            info = helpers.get_implementation_info(repopath)
+
+        try:
+            if method == 'ping':
+                return 'PONG'
+            elif method == 'get_implementation_info':
+                info = helpers.get_implementation_info(repopath)
+                s_info = serialize(info)
+                return s_info
+            else:
+                return self._invoke(repopath, method, cls, params)
+
+        except Exception, e:
+            info = {
+                '__error__': helpers.get_error_info(e)
+            }
+
             s_info = serialize(info)
+            s_info = urllib.quote_plus(s_info)
             return s_info
-        else:
-            return self._invoke(repopath, method, cls, params)
+
 

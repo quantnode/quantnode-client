@@ -1,9 +1,0 @@
-.git
-venv
-venv/*
-.git/*
-*.pyc
-.idea
-.idea/*
-quantnode
-quantnode/*

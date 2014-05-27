@@ -1,9 +1,10 @@
+import sys
+import os
+
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
-
-VERSION = '0.1.2'
 
 install_requires = [
     'requests >= 0.8.8',
@@ -18,9 +19,17 @@ long_description = ''
 with open('description.txt', 'rb') as f:
     long_description = f.read()
 
+def get_version():
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'quantnode'))
+    from version import VERSION
+    v = VERSION
+    sys.path.pop(0)
+    return v
+
+
 setup(
     name='quantnode',
-    version=VERSION,
+    version=get_version(),
     description='Quantnode framework for building financial trading algorithms',
     long_description=long_description,
     author='Quantnode',

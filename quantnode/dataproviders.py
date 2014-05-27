@@ -5,6 +5,7 @@ from structures import DotDict
 import slumber
 import consts
 import mlprotocol
+from cache import DataCache
 
 
 class DataProvider(object):
@@ -33,21 +34,29 @@ class DataProvider(object):
         if not timestamp:
             timestamp = self.timestamp
 
-        if symbol not in self._query_cache:
-            data = self.api.pricebar.get(symbol = symbol, order_by = 'timestamp', limit=0)
+
+        if symbol not in DataCache().query_cache:
+            print 'querying http server'
+            try:
+                data = self.api.pricebar.get(symbol = symbol, order_by = 'timestamp', limit=0)
+            except Exception, e:
+                print 'http server error: %s' % e.message
+
             for obj in data['objects']:
                 if 'timestamp' in obj:
                     obj['timestamp'] = parsedt(obj['timestamp'])
                 if 'date' in obj:
                     obj['date'] = parsedt(obj['date']).date()
-            self._query_cache[symbol] = [DotDict(i) for i in data['objects']]
+            DataCache().query_cache[symbol] = [DotDict(i) for i in data['objects']]
 
         if from_timestamp is None:
-            bars = [i for i in self._query_cache[symbol] if i.timestamp < timestamp]
+            bars = [i for i in DataCache().query_cache[symbol] if i.timestamp < timestamp]
         else:
-            bars = [i for i in self._query_cache[symbol] if from_timestamp <= i.timestamp < timestamp]
+            bars = [i for i in DataCache().query_cache[symbol] if from_timestamp <= i.timestamp < timestamp]
 
         total = len(bars)
+        # print 'found %d bars' % total
+
         if total > n_bars:
             ls = []
             for i in range(total - n_bars, total):
