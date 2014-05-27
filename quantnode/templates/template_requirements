@@ -9,4 +9,4 @@ serpent==1.5
 six==1.5.2
 slumber==0.6.0
 wsgiref==0.1.2
-quantnode==0.1.1
+quantnode==0.1.2
