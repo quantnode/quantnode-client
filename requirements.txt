@@ -1,0 +1,7 @@
+Pyro4==4.25
+argparse==1.2.1
+python-dateutil==2.2
+requests==2.2.1
+serpent==1.5
+six==1.5.2
+slumber==0.6.0
