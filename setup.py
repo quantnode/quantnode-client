@@ -3,13 +3,15 @@ try:
 except ImportError:
     from distutils.core import setup
 
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 
 install_requires = [
     'requests >= 0.8.8',
     'Pyro4 >= 4.25',
+    'serpent >= 1.5',
     'slumber >= 0.6.0',
-    'python-dateutil >= 2.1'
+    'python-dateutil >= 2.1',
+    'argparse >= 1.1'
 ]
 
 long_description = ''
@@ -25,9 +27,9 @@ setup(
     author_email='hello@quantnode.com',
     url='https://www.quantnode.com/',
     packages=['quantnode'],
-    package_data={'quantnode': ['../VERSION']},
+    package_data={'quantnode': ['../VERSION', '../description.txt']},
     install_requires=install_requires,
-    scripts=['bin/quantnode-run.py'],
+    scripts=['quantnode/bin/quantnode-run.py'],
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",

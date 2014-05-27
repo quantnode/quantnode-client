@@ -1,11 +1,12 @@
-Pyro4==4.24
+Pyro4==4.25
 argparse==1.2.1
 numpy==1.8.0
 python-dateutil==2.2
 pytz==2013.9
 requests==2.2.1
 scipy==0.13.3
-serpent==1.4
+serpent==1.5
 six==1.5.2
 slumber==0.6.0
 wsgiref==0.1.2
+quantnode==0.1.1
