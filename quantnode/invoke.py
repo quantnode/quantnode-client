@@ -54,4 +54,3 @@ class RemoteInvocationHandler(object):
             s_info = urllib.quote_plus(s_info)
             return s_info
 
-

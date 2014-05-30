@@ -52,7 +52,6 @@ def _get_subclass_info(parentcls):
 
 def get_implementation_info(projpath):
     from actors import Calculator, Algorithm
-
     if not projpath:
         raise AttributeError('get_implementation_info requires the path of the project')
 

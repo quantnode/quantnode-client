@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import os
 import sys
 import Pyro4
@@ -34,10 +36,28 @@ def start_invocation_handler(args):
     Pyro4.Daemon.serveSimple(config, ns = True)
 
 
+def handle_run_command(args):
+    from .actors import run
+
+    testserver_host = args.testserver
+    if args.testserver:
+        run(testserver_host, calculations=True, backtest=True)
+
+    if hasattr(settings, 'TEST_SERVER_ADDRESS'):
+        testserver_host = getattr(settings, 'TEST_SERVER_ADDRESS', '')
+        if testserver_host:
+            run(testserver_host, calculations=True, backtest=True)
+
+    sys.stderr.write('no testserver hostname found\n')
+    print('No testserver hostname found. Use: ./quantnode-run.py run -t hostname or set TEST_SERVER_ADDRESS in settings.py')
+
+
 
 COMMAND_REMOTE_INVOCATION = 'start_invocation_handler'
+COMMAND_RUN = 'run'
 
 COMMAND_METHODS = {
     COMMAND_REMOTE_INVOCATION: start_invocation_handler,
+    COMMAND_RUN: handle_run_command
 }
 

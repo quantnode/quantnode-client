@@ -28,10 +28,14 @@ if __name__ == '__main__':
         help = "Remote invocation data. Only required for remote invocations"
     )
 
+    parser.add_argument(
+        '-t', '--testserver',
+        help = "Test server hostname"
+    )
+
     args = parser.parse_args()
     settingspath = os.path.join(os.getcwd(), 'settings.py')
     commands.load_settings(settingspath)
-
 
     cmd = commands.COMMAND_METHODS.get(args.command)
     if cmd:

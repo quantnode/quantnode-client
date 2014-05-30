@@ -34,3 +34,15 @@ Tutorials to learn Quantnode are available at: http://quantnode.com/tutorials/
 
 Full documentation is available at: http://quantnode.com/docs/
 
+## Debugging your algorithm
+
+You can stream data from Quantnode to your trading algorithm through a test server.
+
+Launch a test server at https://www.quantnode.com/testserver (you'll need to be logged into your Quantnode account)
+
+Run your algorithm using the test server:
+
+    $ ./quantnode-run.py run -t [test-server-hostname]
+
+More details (full tutorial): https://www.quantnode.com/tutorials/testing/
+

@@ -1,6 +1,6 @@
 import os
 import sys
-from serialize import deserialize
+from serialize import deserialize, serialize
 import atexit
 import helpers
 import consts
@@ -203,12 +203,13 @@ def invoke_method(userobj, method, params):
 def run(hostname, calculations=False, backtest=False, portfolio_manager=False, port=consts.PORT):
     from socket import socket, AF_INET, SOCK_STREAM
     from dataproviders import ClientDataProvider
-    import inspect
+    # import inspect
     import json
 
-    frm = inspect.stack()[1]
-    mod = inspect.getmodule(frm[0])
-    filepath = os.path.dirname(os.path.abspath(mod.__file__))
+    # frm = inspect.stack()[1]
+    # mod = inspect.getmodule(frm[0])
+    # filepath = os.path.dirname(os.path.abspath(mod.__file__))
+    projpath = os.getcwd()
 
     s = socket(AF_INET, SOCK_STREAM)
     s.connect((hostname, port))
@@ -243,8 +244,17 @@ def run(hostname, calculations=False, backtest=False, portfolio_manager=False, p
         method = invocation['method']
         cls = invocation['class']
 
+        if method == 'ping':
+            return 'PONG'
+        elif method == 'get_implementation_info':
+            info = helpers.get_implementation_info(projpath)
+            s_info = serialize(info)
+            socket_dataprovider.ack_data(s_info)
+            socket_dataprovider.send_ack()
+            continue
+
         if not userobj:
-            usercls = find_implementation(filepath, cls)
+            usercls = helpers.find_implementation(projpath, cls)
             userobj = usercls(data_provider = socket_dataprovider)
 
         helpers.attach_parameters(socket_dataprovider, params)

@@ -55,7 +55,7 @@ class DataProvider(object):
             bars = [i for i in DataCache().query_cache[symbol] if from_timestamp <= i.timestamp < timestamp]
 
         total = len(bars)
-        # print 'found %d bars' % total
+        print 'found %d bars' % total
 
         if total > n_bars:
             ls = []
@@ -193,6 +193,9 @@ class ClientDataProvider(DataProvider):
         })
         self.ack_counter += 1
 
+    def ack_data(self, data):
+        self.acks.append(data)
+        self.ack_counter += 1
 
     def get_acks(self):
         return self.acks
