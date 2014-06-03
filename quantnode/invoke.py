@@ -7,15 +7,23 @@ import urllib
 
 class RemoteInvocationHandler(object):
 
+    def __init__(self):
+        self.dp = ClientDataProvider()
+        self.usercls = ''
+        self.userobj = None
+        self.last_method = ''
+
     def _invoke(self, repopath, method, cls, params):
-        dp = ClientDataProvider()
+        dp = self.dp
         dp.reset_ack()
 
-        usercls = helpers.find_implementation(repopath, cls)
-        userobj = usercls(data_provider = dp)
-        helpers.attach_parameters(dp, params)
+        if (not self.usercls and not self.userobj) or method != self.last_method:
+            self.usercls = helpers.find_implementation(repopath, cls)
+            self.userobj = self.usercls(data_provider = dp)
 
-        invoke_method(userobj, method, params)
+        self.last_method = method
+        helpers.attach_parameters(dp, params)
+        invoke_method(self.userobj, method, params)
 
         acks = dp.get_acks()
         s_acks = serialize(acks)
